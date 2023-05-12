@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今晚吃什么</title>
+    <style>
+        /* 初始化页面，清除所有元素的内外边距 */
+        *{
+            padding: 0;
+            margin: 0;
+            /* 设置背景颜色为414141 */
+           background-image:url(http://m.qpic.cn/psc?/V12H8dAA3IaO1P/ruAMsa53pVQWN7FLK88i5kxy1n4ASEpXJooW8PMws6TnRsZrgglQT0sTIizQ8J2bzNUQzVoxp8u3haFVPag0exNa8aATadIadY*BAl8*7oU!/b&bo=OASICAAAAAADB54!&rf=viewer_4);
+	background-size:100%
+        }
+        /* 盒子居中 */
+        div{
+            position: fixed;
+            width:375px;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%,-20%);
+            text-align: center;
+	background:0;
+        }
+        /* 使用上期视频的文字渐变效果，再加一点点文字阴影 */
+        span,h2{
+         text-shadow: 0 0 10px #dfd8d8;
+            background: linear-gradient(135deg,#14ffe9,#ffeb3b,#ff00e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: ff 0.9s linear infinite;
+        }
+        @keyframes ff{
+            to{filter: hue-rotate(360deg);}
+        }
+        /* 设置一下字体大小 */
+        h2{
+            font-size: 72px;
+        }
+        span{
+            font-size: 46px;
+        }
+
+
+        /* 按钮居中 */
+        button{
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 100px;
+            height: 35px;
+            box-shadow: 0 0 10px #fff;
+            /* 取消轮廓线 */
+            outline: none;
+            background:white;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>今晚吃什么</h2>
+        <span id="name"></span>
+    </div>
+    <button id="button_text">准备</button>
+
+
+    <script>
+        // 获取标签
+        let nametxt=document.getElementById('name');
+        let button=document.getElementById('button_text');
+        // 创建一个数组存储名字
+        let uname=['包心菜蛋饼虾仁三明治','泡菜巴沙鱼豆腐捞','韩式鸡腿肉盖饭','金枪鱼海苔卷','番茄奶酪布拉塔','蟹柳蔬蔬厚蛋烧','高纤蟹柳玉子烧','爆浆莓果燕麦松饼','韩式无米拌饭','韩式芝士辣鸡面',
+		'酸辣番茄蔬菜捞','高纤维金枪鱼三明治','牛排杂粮海苔卷','三文鱼泡菜炒饭','金枪鱼菠菜贝果夹','葱香鱿鱼煎饼','海苔芝士玉子烧早餐盘','泡菜金枪鱼热压三明治','金枪鱼牛油果波奇饭',
+		'百香果牛肉沙拉','网红南瓜蟹柳沙拉','烤苹果金枪鱼早餐盘','可可燕麦蛋饼','鸡蛋酱三明治早餐盘','虾仁燕麦泡菜饼','泰式打抛牛肉饭','泰式捞汁白虾','番茄牛肉生菜 Taco','菠萝香菜挫牛肉',
+		'泡菜烤巴沙鱼','蟹柳鸡蛋沙拉卷','虾滑芝士吐司早餐盘','空气炸锅版意式烤蛋','奶酪虾仁菠菜青裸面','牛油果虾仁卷饼','快手版意式肉酱养麦面','韩式鸡肉生菜拌面','鲜虾蟹柳豆腐烘蛋','抹茶魔芋冷面',
+		'春夏菌菇拌菠菜','芝士菠菜鸡肉饼','三文鱼木瓜沙拉','燕麦酸奶碗','厚切牛肉彩虹三明治','减脂轻卡版罗宋汤','海苔虾仁奶酪堡','韩式蜜汁炸鸡腿','低卡托斯卡纳三文鱼配杂粮饭','蟹柳沙拉卷','番茄鸡蛋燕麦炒饭',
+		'烤花菜虾仁沙拉','蒜香奶酪金枪鱼吐司','蟹柳滑蛋抹茶奶酪三明治','无面粉虾仁 Taco','蟹柳包菜鸡蛋三明治','西班牙焖蛋牛排','包菜牛肉蛋堡','海苔菠菜鸡蛋卷','抹茶奶酪贝果三明治','无米寿司卷','南瓜菠菜蟹柳烘蛋',
+		'黑花生酱西多士','孜然羊肉手抓饭','甜彩椒玉米青裸面','蔬菜烩巴沙鱼','牛肉藜麦温沙拉','芥末奶酪三文鱼贝果','低卡北非蛋可丽饼','空气炸锅版巴斯克炖鸡','虾仁焖豆腐码饭','地中海鲜虾芒果牛油果沙拉','泰式柠檬海鲜汤面',
+		'超能量总汇三明治','大力水手燕麦粥(咸口)','低卡铁板大鱿鱼','低GI海鲜养麦炒面','韩式鸡蛋酱拌养麦面','番茄鲜虾养麦面','泰式酸辣虾养麦面','费城牛肉三明治','蟹柳牛油果烘蛋','轻卡黑椒牛肉炒饭','照烧巴沙鱼盖饭','蟹柳滑蛋奶酪菠菜三明治',
+		'低卡欧包早餐盘','超能量生菜牛排拌饭','蒜香虾青裸面','芒果鲜虾沙拉','低脂奶酪鸡肉意面','葱香鲜虾吐司','爆浆芝士蟹柳蛋饼','芒果巧克力琳练杯','泡菜海鲜饼','低卡燕麦海鲜粥','低卡海鲜大阪烧','蛋白质大爆炸','全麦黄瓜鸡蛋卷饼','照烧鸡腿饭',
+		'花生酱虾仁拌养麦面','裙带菜口蘑鹤蚂蛋汤','百香果奶酪虾仁三明治','牛油果鲜虾蛋卷','地中海香草烤虾','番茄巴沙鱼谷物碗','韩式煎阿根廷红虾','番茄红烧牛肉面','泰式酸辣鸡腿排','孜然牛肉卷','黑椒牛肉养麦面','低卡什锦虾仁盖饭','娃娃菜豆芽蛋汤',
+		'低卡牛油果虾仁班尼蛋','轻卡莓果西多士','咖啡蓝莓燕麦松饼','牛油果水波蛋开放三明治','轻卡葱葱鸡饭','番茄蛋煎豆腐','无油低卡麻辣拌','牛排菌菇开放式三明治','皮蛋豆苗汤','低卡寿喜锅','杂粮牛排饭团','低热量酸辣汤','奇亚籽全麦牛肉三明治','轻卡浓郁蘑菇汤',
+		'低卡麻辣烫','墨西哥牛肉卷','柠香清蒸鱼','口蘑番茄豆腐汤','爆浆莓果烤燕麦','蟹柳包菜蛋饼'];
+        // 创建一个函数生成随机数字
+        function getrandom(min,max){
+            return Math.floor(Math.random()*(max-min-1)+min);
+        }
+        function clock(){
+            // 通过获取一个随机的数组下标实现随机获取一个名字，并将这个名字赋值给变量random
+            let random=uname[getrandom(0,uname.length-1)];
+            //将random塞到span里
+            nametxt.innerHTML=random;
+        };
+        // 打印名字已经实现了，下一步让没点击按钮前名字一直刷新
+        // 设置不停止时名字的刷新速度为30毫秒
+        let time=self.setInterval("clock()",30);
+        // 将开始与停止按钮绑定到按钮上，并通过按钮控制
+        let flag=false;
+        button.onclick=function(){
+            // 当flag标志为false时，点击按钮让刷新停止；
+            if(flag==false)
+            {
+                time=window.clearInterval(time);
+                // 按钮文字从stop变为start；
+                button.innerHTML='开始';
+                // 标志变更
+                flag=true;
+            }else{
+                // 当flag标志为true时，开始刷新，文字变更
+                time=self.setInterval("clock()",30);
+                button.innerHTML='停止';
+                flag=false;
+            }
+        }
+    </script>
+</body>
+</html>
